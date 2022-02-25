@@ -61,7 +61,26 @@
  * then use the copied object like a lookup table
  */
 function getColorValue(color) {
-  // write your code here & return value
+  const colorCodes = {
+    black: 0,
+    brown: 1,
+    red: 2,
+    orange: 3,
+    yellow: 4,
+    green: 5,
+    blue: 6,
+    violet: 7,
+    grey: 8,
+    white: 9,
+  };
+  const colorlist = Object.keys(colorCodes);
+  const value = Object.values(colorCodes);
+  let digit;
+  for (let a = 0; a < colorlist.length; a += 1)
+    if (colorlist[a] === color) {
+      digit = value[a];
+    }
+  return digit;
 }
 
 /**
@@ -78,7 +97,28 @@ function getColorValue(color) {
  * then use the copied object like a lookup table
  */
 function getMultiplierValue(color) {
-  // write your code here & return value
+  const multiplierCodes = {
+    black: 1,
+    brown: 10,
+    red: 100,
+    orange: 1000,
+    yellow: 10000,
+    green: 100000,
+    blue: 1000000,
+    violet: 10000000,
+    grey: 100000000,
+    white: 1000000000,
+    gold: 0.1,
+    silver: 0.01,
+  };
+  const colorlist = Object.keys(multiplierCodes);
+  const value = Object.values(multiplierCodes);
+  let num;
+  for (let a = 0; a < colorlist.length; a += 1)
+    if (colorlist[a] === color) {
+      num = value[a];
+    }
+  return num;
 }
 
 /**
@@ -105,7 +145,53 @@ function getMultiplierValue(color) {
  *
  */
 function getThreeBandValue(bands) {
-  // write your code here & return value
+  const colorCodes = {
+    black: 0,
+    brown: 1,
+    red: 2,
+    orange: 3,
+    yellow: 4,
+    green: 5,
+    blue: 6,
+    violet: 7,
+    grey: 8,
+    white: 9,
+  };
+  const multiplierCodes = {
+    black: 1,
+    brown: 10,
+    red: 100,
+    orange: 1000,
+    yellow: 10000,
+    green: 100000,
+    blue: 1000000,
+    violet: 10000000,
+    grey: 100000000,
+    white: 1000000000,
+    gold: 0.1,
+    silver: 0.01,
+  };
+  const colorlist = Object.keys(colorCodes);
+  const value = Object.values(colorCodes);
+  let color1;
+  for (let a = 0; a < colorlist.length; a += 1)
+    if (colorlist[a] === bands.color1) {
+      color1 = value[a];
+    }
+  let color2;
+  for (let a = 0; a < colorlist.length; a += 1)
+    if (colorlist[a] === bands.color2) {
+      color2 = value[a];
+    }
+  const list = Object.keys(multiplierCodes);
+  const val = Object.values(multiplierCodes);
+  let number;
+  for (let a = 0; a < list.length; a += 1)
+    if (list[a] === bands.multiplier) {
+      number = val[a];
+    }
+  const threebands = (color1 * 10 + color2) * number;
+  return threebands;
 }
 
 /**
@@ -130,7 +216,22 @@ function getThreeBandValue(bands) {
  *
  */
 function formatNumber(val) {
-  // write your code here & return value
+  let str;
+  let number;
+  if (val >= 1000000000) {
+    number = val / 1000000000;
+    str = `${number.toString()}G`;
+  } else if (val >= 1000000) {
+    number = val / 1000000;
+    str = `${number.toString()}M`;
+  } else if (val >= 1000) {
+    number = val / 1000;
+    str = `${number.toString()}k`;
+  } else {
+    number = val;
+    str = `${number.toString()}`;
+  }
+  return str;
 }
 
 /**
@@ -149,7 +250,24 @@ function formatNumber(val) {
  * example: 'green' => '±0.5%'
  */
 function getTolerance(color) {
-  // write your code here & return value
+  const toleranceCodes = {
+    brown: '±1%',
+    red: '±2%',
+    green: '±0.5%',
+    blue: '±0.25%',
+    violet: '±0.1%',
+    grey: '±0.05%',
+    gold: '±5%',
+    silver: '±10%',
+  };
+  const colorlist = Object.keys(toleranceCodes);
+  const value = Object.values(toleranceCodes);
+  let tolerance;
+  for (let a = 0; a < colorlist.length; a += 1)
+    if (colorlist[a] === color) {
+      tolerance = value[a];
+    }
+  return tolerance;
 }
 
 /**
@@ -181,7 +299,10 @@ function getTolerance(color) {
  * must use functions in this file to build the string using a template literal
  */
 function getResistorOhms(bands) {
-  // write your code here & return value
+  const resistor = getThreeBandValue(bands);
+  return `Resistor value: ${formatNumber(resistor)} Ohms ${getTolerance(
+    bands.tolerance
+  )}`;
 }
 
 module.exports = {
